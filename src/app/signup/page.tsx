@@ -11,15 +11,12 @@ export const metadata: Metadata = {
 const SignUp = () => {
   return (
     <Box
-      pt={30}
-      sx={{
-        flewGrow: 1,
-        display: "flex",
-        justifyContent: "center",
-      }}
+      width={"100%"}
+      pt={10}
+      sx={{ display: "flex", justifyContent: "center" }}
     >
-      <Paper>
-        <Typography>회원가입</Typography>
+      <Paper variant={"outlined"} sx={{ padding: "24px", width: "310px" }}>
+        <Typography mb={2}>회원가입</Typography>
         <SignUpFrom />
       </Paper>
     </Box>

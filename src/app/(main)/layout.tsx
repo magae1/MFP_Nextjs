@@ -8,7 +8,7 @@ interface props {
 
 const MainLayout = ({ children, boxoffice }: props) => {
   return (
-    <Grid container spacing={1} sx={{ height: "200vh" }}>
+    <Grid container spacing={1} sx={{ height: "100vh" }}>
       <Grid container item spacing={1} xs={12} sm={7}>
         <Grid item xs={12} sm={7}>
           {boxoffice}

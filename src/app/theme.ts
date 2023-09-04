@@ -1,16 +1,32 @@
 import { experimental_extendTheme as extendTheme } from "@mui/material/styles";
+import { purple } from "@mui/material/colors";
 
 export const theme = extendTheme({
   components: {
+    MuiInput: {
+      styleOverrides: {
+        root: {
+          fontSize: "1.1em",
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          top: "0.5em",
+          left: "-1em",
+        },
+      },
+    },
     MuiAppBar: {
       styleOverrides: {
         root: ({ theme }) => ({
           backgroundImage: "none",
           boxShadow: "none",
-          backgroundColor: "rgba(230 230 230 / 0.8)",
+          backgroundColor: "rgba(205 205 205 / 0.8)",
           border: "1px solid rgba(229 234 242 / 1)",
           [theme.getColorSchemeSelector("dark")]: {
-            backgroundColor: "rgba(25 25 25 / 0.8)",
+            backgroundColor: "rgba(75 75 75 / 0.8)",
             border: "1px solid rgba(194 224 255 / 0.08)",
           },
         }),
@@ -21,14 +37,14 @@ export const theme = extendTheme({
     light: {
       palette: {
         primary: {
-          main: "#ce2424",
+          main: purple[400],
         },
       },
     },
     dark: {
       palette: {
         primary: {
-          main: "#592626",
+          main: purple[800],
         },
       },
     },

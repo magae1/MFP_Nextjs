@@ -13,7 +13,7 @@ const MyProfileBtn = () => {
   };
 
   return (
-    <>
+    <div>
       <ButtonBase
         sx={{ borderRadius: "100%" }}
         id="avatar-button"
@@ -36,7 +36,7 @@ const MyProfileBtn = () => {
         <MenuItem onClick={handleClose}>내 프로필</MenuItem>
         <MenuItem onClick={handleClose}>로그아웃</MenuItem>
       </Menu>
-    </>
+    </div>
   );
 };
 
