@@ -3,6 +3,19 @@ import { purple } from "@mui/material/colors";
 
 export const theme = extendTheme({
   components: {
+    MuiButton: {
+      defaultProps: {
+        variant: "contained",
+      },
+    },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          minHeight: "20px",
+          marginTop: "1px",
+        },
+      },
+    },
     MuiInput: {
       styleOverrides: {
         root: {

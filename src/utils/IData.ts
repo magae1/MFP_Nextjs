@@ -24,3 +24,12 @@ export interface IBoxOffice {
   showRange: string;
   dailyBoxOfficeList: IDailyBoxOffice[];
 }
+
+export interface IObtainTokens {
+  refresh: string;
+  access: string;
+}
+
+export interface IRefreshTokens {
+  refresh: string;
+}

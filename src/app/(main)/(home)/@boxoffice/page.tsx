@@ -1,5 +1,7 @@
-import { IBoxOffice } from "@/utils/IData";
+import React from "react";
 import { Box, Stack, Typography } from "@mui/material";
+
+import { IBoxOffice } from "@/utils/IData";
 import BoxOffice from "@/components/BoxOffice";
 
 async function getData() {

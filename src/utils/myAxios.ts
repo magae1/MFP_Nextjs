@@ -1,6 +1,22 @@
 import axios from "axios";
 
-export const basicAxios = axios.create({
-  baseURL: "http://127.0.0.1:8000/",
-  timeout: 1000,
+const InternalURL = "http://127.0.0.1:8000/";
+const ExternalURL = process.env.ExternalURL;
+
+export const baseAxios = axios.create({
+  baseURL: ExternalURL + "api/",
+  timeout: 2000,
 });
+
+export const boxOfficeFetcher = (tagetDt: string) =>
+  axios
+    .get(
+      `http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${process.env.BOXOFFICE_KEY}&targetDt=${tagetDt}`,
+      {
+        timeout: 3000,
+      }
+    )
+    .then((res) => {
+      res.data.hasOwnProperty("");
+    })
+    .catch();
