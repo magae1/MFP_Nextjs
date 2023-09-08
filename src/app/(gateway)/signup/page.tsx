@@ -37,20 +37,7 @@ const schema = z
           validator.isLowercase(value),
         {
           message: "영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.",
-        }
-      )
-      .refine(
-        async (value) => {
-          try {
-            await baseAxios.get("signup/confirm_identifier/", {
-              params: { identifier: value },
-            });
-            return true;
-          } catch {
-            return false;
-          }
         },
-        { message: "이미 사용 중인 아이디입니다." }
       ),
     email: z.string().email("이메일 형식이 아닙니다.").or(z.literal("")),
     password: z
@@ -97,6 +84,7 @@ const SignUpForm = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<SchemaType>({ resolver: zodResolver(schema) });
 
@@ -105,18 +93,24 @@ const SignUpForm = () => {
       .post("signup/", data)
       .then((res) =>
         router.push(
-          `/welcome/?identifier=${res.data.identifier}&email=${res.data.email}`
-        )
+          `/welcome/?identifier=${res.data.identifier}&email=${res.data.email}`,
+        ),
       )
       .catch((error) => {
-        if (error.response.data) {
+        if (!!error.response && !!error.response.data) {
           _.chain(error.response.data)
-            .values()
-            .flatten()
-            .every((value) => toast.error(value));
-        } else {
-          toast.error("알 수 없는 오류가 발생했습니다.");
-        }
+            .pairs()
+            .each(([fieldName, errors]) => {
+              if (
+                fieldName === "identifier" ||
+                fieldName === "password" ||
+                fieldName === "email" ||
+                fieldName === "re_password"
+              ) {
+                _.every(errors, (e) => setError(fieldName, { message: e }));
+              }
+            });
+        } else toast.error("알 수 없는 오류가 발생했습니다.");
       });
   });
 

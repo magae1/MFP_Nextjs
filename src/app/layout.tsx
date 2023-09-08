@@ -1,7 +1,11 @@
 import React, { ReactNode } from "react";
 import { Inter } from "next/font/google";
+import dayjs from "dayjs";
+import 'dayjs/locale/ko'
+dayjs.locale('ko')
 
 import ThemeRegistry from "./ThemeRegistry";
+
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 

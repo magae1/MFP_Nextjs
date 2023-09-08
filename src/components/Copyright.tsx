@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, Typography, TypographyProps } from "@mui/material";
+import dayjs from "dayjs";
 
 export default function Copyright(props: TypographyProps) {
   return (
@@ -13,7 +14,7 @@ export default function Copyright(props: TypographyProps) {
       <Link color="inherit" href="/">
         영자국
       </Link>{" "}
-      {new Date().getFullYear()}
+      {dayjs().year()}
       {"."}
     </Typography>
   );

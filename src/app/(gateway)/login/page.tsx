@@ -15,8 +15,8 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { baseAxios } from "@/utils/myAxios";
-import { logIn } from "@/utils/auth";
 
 const schema = z.object({
   identifier: z.string(),
@@ -37,8 +37,8 @@ export default function Page() {
     baseAxios
       .post("token/", data)
       .then((res) => {
-        logIn(res.data);
-        router.push("/");
+        console.log(res);
+        // router.push("/");
       })
       .catch();
   });

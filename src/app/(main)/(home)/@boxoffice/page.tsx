@@ -1,35 +1,23 @@
 import React from "react";
 import { Box, Stack, Typography } from "@mui/material";
+import dayjs from "dayjs";
 
 import { IBoxOffice } from "@/utils/IData";
 import BoxOffice from "@/components/BoxOffice";
-
-async function getData() {
-  const res = await fetch(
-    `http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${process.env.BOXOFFICE_KEY}&targetDt=20230831`
-  );
-  if (!res.ok) {
-    throw new Error("정보를 가져오는데 실패했습니다.");
-  }
-
-  return res.json().then((value) => {
-    if (value.hasOwnProperty("faultInfo"))
-      throw new Error(value.faultInfo.message);
-    return value.boxOfficeResult;
-  });
-}
+import { boxOfficeFetcher } from "@/utils/myAxios";
 
 export default async function Page() {
-  const data: IBoxOffice = await getData();
+ const targetDate = dayjs().subtract(25, 'hour');
+  const data: IBoxOffice = await boxOfficeFetcher(targetDate.format("YYYYMMDD"));
 
   return (
     <Box>
-      <Typography>{data.boxofficeType}</Typography>
-      <Stack>
+      <Typography>{targetDate.format("MMM D일(dd)")} {data.boxofficeType}</Typography>
+      <Box sx={{ overflow:"auto" , width:"100%", display: "flex"}}>
         {data.dailyBoxOfficeList.map((value, index) => (
-          <BoxOffice key={index} data={value} />
+          <div key={index} style={{width:"300px"}}><BoxOffice data={value} /></div>
         ))}
-      </Stack>
+     </Box>
     </Box>
   );
 }
