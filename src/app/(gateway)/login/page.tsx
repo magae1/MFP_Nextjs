@@ -15,8 +15,9 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 
-import { baseAxios } from "@/utils/myAxios";
+import { baseAxios } from "@/utils/fetchers";
 
 const schema = z.object({
   identifier: z.string(),
@@ -30,6 +31,7 @@ export default function Page() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<SchemaType>({ resolver: zodResolver(schema) });
 
@@ -40,7 +42,15 @@ export default function Page() {
         console.log(res);
         // router.push("/");
       })
-      .catch();
+      .catch((error) => {
+        if (!!error.response && !!error.response.data) {
+          setError("password", {
+            message: "계정을 찾을 수 없습니다. 아이디/비밀번호를 확인해주세요.",
+          });
+        } else {
+          toast.error("알 수 없는 오류가 발생했습니다");
+        }
+      });
   });
 
   return (
@@ -59,11 +69,13 @@ export default function Page() {
           {errors.password?.message && errors.password.message}
         </FormHelperText>
       </FormControl>
-      <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-        로그인
-      </Button>
-      <Grid container>
-        <Grid item xs>
+      <Grid container spacing={0.5}>
+        <Grid item xs={12}>
+          <Button type="submit" fullWidth>
+            로그인
+          </Button>
+        </Grid>
+        <Grid item xs={6}>
           <MuiLink component={Link} href="/signup" variant="body2">
             회원가입하러 가기
           </MuiLink>

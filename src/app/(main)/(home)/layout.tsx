@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Card, Grid } from "@mui/material";
+import { Card, Grid, Paper } from "@mui/material";
 
 interface props {
   children: ReactNode;
@@ -8,17 +8,15 @@ interface props {
 
 const MainLayout = ({ children, boxoffice }: props) => {
   return (
-    <Grid container spacing={1} sx={{ height: "100vh" }}>
-      <Grid container item spacing={1} xs={12} sm={7}>
-        <Grid item xs={12} sm={7}>
+    <Grid container spacing={1} mt={2}>
+      <Grid container item spacing={2} xs={12} sm={6}>
+        <Grid item xs={12}>
           {boxoffice}
         </Grid>
-        <Grid item xs={12} sm={7}>
-          <Card>456</Card>
-        </Grid>
+        <Grid item xs={12}></Grid>
       </Grid>
-      <Grid item xs={12} sm={5}>
-        <Card>{children}</Card>
+      <Grid item xs={12} sm={6}>
+        <Paper>{children}</Paper>
       </Grid>
     </Grid>
   );

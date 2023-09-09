@@ -24,7 +24,7 @@ import { z } from "zod";
 import { toast } from "react-toastify";
 import _ from "underscore";
 
-import { baseAxios } from "@/utils/myAxios";
+import { baseAxios } from "@/utils/fetchers";
 
 const schema = z
   .object({
@@ -76,7 +76,7 @@ const SignUpLabel = (props: {
   );
 };
 
-const SignUpForm = () => {
+export default function Page() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showRepassword, setShowRepassword] = useState(false);
@@ -197,6 +197,4 @@ const SignUpForm = () => {
       </Box>
     </Stack>
   );
-};
-
-export default SignUpForm;
+}

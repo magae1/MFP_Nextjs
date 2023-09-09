@@ -4,10 +4,10 @@ import { Paper, Container, Stack } from "@mui/material";
 import Copyright from "@/components/Copyright";
 import GatewayHeader from "@/components/GatewayHeader";
 
-export default function SignUpLayout({ children }: { children: ReactNode }) {
+export default function GatewayLayout({ children }: { children: ReactNode }) {
   return (
     <Container sx={{ display: "flex", justifyContent: "center" }}>
-      <Stack mt={20} width={"100%"} maxWidth={440} spacing={2}>
+      <Stack mt={12} width={"100%"} maxWidth={440} spacing={2}>
         <GatewayHeader />
         <Paper sx={{ px: 5, pt: 2, pb: 5 }} variant={"outlined"}>
           {children}

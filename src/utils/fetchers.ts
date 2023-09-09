@@ -18,3 +18,11 @@ export const boxOfficeFetcher = (tagetDt: string) =>
     )
     .then((res) => res.data.boxOfficeResult)
     .catch((err) => err);
+
+export const tmdbFetcher = (movie: string) =>
+  axios
+    .get(
+      `https://api.themoviedb.org/3/search/movie?query=${movie}&language=ko&region=KR&api_key=${process.env.TMDB_API_KEY}`,
+    )
+    .then((res) => res.data)
+    .catch((err) => err);

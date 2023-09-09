@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 export default function MainLayout({ children }: { children: ReactNode }) {
   return (
     <>
-      <TitleBar />
       <AppBar
         sx={{
           minWidth: "10px",
