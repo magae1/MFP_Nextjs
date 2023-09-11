@@ -1,5 +1,33 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/login",
+        has: [
+          {
+            type: "cookie",
+            key: "isLogIn",
+            value: "True",
+          },
+        ],
+        permanent: false,
+        destination: "/",
+      },
+      {
+        source: "/signup",
+        has: [
+          {
+            type: "cookie",
+            key: "isLogIn",
+            value: "True",
+          },
+        ],
+        permanent: false,
+        destination: "/",
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

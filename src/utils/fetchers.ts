@@ -6,6 +6,7 @@ const ExternalURL = process.env.ExternalURL;
 export const baseAxios = axios.create({
   baseURL: InternalURL + "api/",
   timeout: 2000,
+  withCredentials: true,
 });
 
 export const boxOfficeFetcher = (tagetDt: string) =>

@@ -17,24 +17,19 @@ const BoxOffice = async ({ data }: props) => {
   const searchResult = await tmdbFetcher(movieNm);
 
   return (
-    <Card>
-      <Image
-        src={TMDB_IMAGE_URL + searchResult.results[0].poster_path}
-        width={150}
-        height={200}
-        alt={`poster ${movieNm}`}
-      />
-      <CardContent sx={{ position: "relative", bgcolor: "primary.main" }}>
-        <Typography
-          sx={{
-            position: "absolute",
-            left: "1px",
-            top: -1,
-            backgroundColor: "white",
-          }}
-        >
-          {rnum}
-        </Typography>
+    <Card sx={{ width: "inherit" }}>
+      <CardMedia
+        sx={{ position: "relative", width: "100%", aspectRatio: 3 / 4 }}
+      >
+        <Image
+          src={TMDB_IMAGE_URL + searchResult.results[0].poster_path}
+          alt={`poster ${movieNm}`}
+          fill
+          sizes={"100%"}
+        />
+      </CardMedia>
+      <CardContent>
+        <Typography>{rnum}</Typography>
         <Typography>{movieNm}</Typography>
       </CardContent>
     </Card>

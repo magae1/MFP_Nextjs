@@ -1,8 +1,12 @@
 "use client";
 import React, { useState, MouseEvent } from "react";
+import { useRouter } from "next/navigation";
 import { Avatar, ButtonBase, Menu, MenuItem } from "@mui/material";
 
+import { baseAxios } from "@/utils/fetchers";
+
 const MyProfileBtn = () => {
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -12,8 +16,12 @@ const MyProfileBtn = () => {
     setAnchorEl(null);
   };
 
+  const logOut = () => {
+    baseAxios.post("auth/logout/", null).then((res) => router.refresh());
+  };
+
   return (
-    <div>
+    <>
       <ButtonBase
         sx={{ borderRadius: "100%" }}
         id="avatar-button"
@@ -34,9 +42,9 @@ const MyProfileBtn = () => {
         }}
       >
         <MenuItem onClick={handleClose}>내 프로필</MenuItem>
-        <MenuItem onClick={handleClose}>로그아웃</MenuItem>
+        <MenuItem onClick={logOut}>로그아웃</MenuItem>
       </Menu>
-    </div>
+    </>
   );
 };
 

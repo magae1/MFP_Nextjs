@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, Stack, Typography } from "@mui/material";
 import dayjs from "dayjs";
 
 import { IBoxOffice } from "@/utils/IData";
@@ -18,11 +18,14 @@ export default async function Page() {
         {targetDate.format("MMM D일(dd)")} {data.boxofficeType}
       </Typography>
       <Box sx={{ overflow: "auto", width: "100%", display: "flex" }}>
-        {data.dailyBoxOfficeList.map((value, index) => (
-          <div key={index} style={{ width: "300px" }}>
-            <BoxOffice data={value} />
-          </div>
-        ))}
+        <Stack direction={"row"} spacing={1}>
+          {!!data.dailyBoxOfficeList &&
+            data.dailyBoxOfficeList.map((value, index) => (
+              <Box key={index} sx={{ width: "150px" }}>
+                <BoxOffice data={value} />
+              </Box>
+            ))}
+        </Stack>
       </Box>
     </Paper>
   );

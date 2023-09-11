@@ -37,10 +37,13 @@ export default function Page() {
 
   const onLogIn = handleSubmit((data) => {
     baseAxios
-      .post("token/", data)
+      .post("auth/login/", data)
       .then((res) => {
-        console.log(res);
-        // router.push("/");
+        const accessToken = res.data.access;
+        baseAxios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${accessToken}`;
+        router.refresh();
       })
       .catch((error) => {
         if (!!error.response && !!error.response.data) {
@@ -64,7 +67,12 @@ export default function Page() {
       </FormControl>
       <FormControl>
         <InputLabel htmlFor="password-labal">비밀번호</InputLabel>
-        <Input maxRows={40} fullWidth {...register("password")} />
+        <Input
+          type={"password"}
+          maxRows={40}
+          fullWidth
+          {...register("password")}
+        />
         <FormHelperText error>
           {errors.password?.message && errors.password.message}
         </FormHelperText>

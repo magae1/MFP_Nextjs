@@ -1,10 +1,11 @@
 import React, { ReactNode } from "react";
 import type { Metadata } from "next";
-import { AppBar, Container, Stack, Toolbar } from "@mui/material";
+import { cookies } from "next/headers";
+import Link from "next/link";
+import { AppBar, Button, Container, Stack, Toolbar } from "@mui/material";
 
 import ThemeBtn from "@/components/ThemeBtn";
 import MyProfileBtn from "@/components/MyProfileBtn";
-import TitleBar from "@/components/TitleBar";
 
 export const metadata: Metadata = {
   title: "MFP",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default function MainLayout({ children }: { children: ReactNode }) {
+  const cookieStore = cookies();
   return (
     <>
       <AppBar
@@ -32,7 +34,13 @@ export default function MainLayout({ children }: { children: ReactNode }) {
             alignItems="center"
           >
             <ThemeBtn />
-            <MyProfileBtn />
+            {cookieStore.has("isLogIn") ? (
+              <MyProfileBtn />
+            ) : (
+              <Button component={Link} href={"/login"}>
+                로그인
+              </Button>
+            )}
           </Stack>
         </Toolbar>
       </AppBar>
