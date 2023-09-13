@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useColorScheme } from "@mui/material/styles";
 import { IconButton } from "@mui/material";
 import { LightModeSharp, Brightness3Sharp } from "@mui/icons-material";

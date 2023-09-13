@@ -1,7 +1,5 @@
 "use client";
-import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   Input,
   Button,
@@ -16,8 +14,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
+import jwt_decode from "jwt-decode";
 
 import { baseAxios } from "@/utils/fetchers";
+import { IAccessTokenPayLoad } from "@/utils/IData";
+import { storeTokenPayload } from "@/utils/tokens";
 
 const schema = z.object({
   identifier: z.string(),
@@ -27,7 +28,6 @@ const schema = z.object({
 type SchemaType = z.infer<typeof schema>;
 
 export default function Page() {
-  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -38,13 +38,7 @@ export default function Page() {
   const onLogIn = handleSubmit((data) => {
     baseAxios
       .post("auth/login/", data)
-      .then((res) => {
-        const accessToken = res.data.access;
-        baseAxios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${accessToken}`;
-        router.refresh();
-      })
+      .then((res) => location.replace("/"))
       .catch((error) => {
         if (!!error.response && !!error.response.data) {
           setError("password", {

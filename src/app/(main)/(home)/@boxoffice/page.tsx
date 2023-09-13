@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Paper, Stack, Typography } from "@mui/material";
 import dayjs from "dayjs";
 

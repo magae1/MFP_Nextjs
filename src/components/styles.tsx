@@ -1,6 +1,7 @@
 "use client";
-import { AppBar, styled } from "@mui/material";
+import { AppBar, Grid, styled } from "@mui/material";
 import type {} from "@mui/material/themeCssVarsAugmentation";
+import { display } from "@mui/system";
 
 export const TransparentAppBar = styled(AppBar)(({ theme }) => ({
   position: "static",
@@ -8,4 +9,8 @@ export const TransparentAppBar = styled(AppBar)(({ theme }) => ({
   [theme.getColorSchemeSelector("dark")]: {
     backgroundColor: "rgba(0 0 0 / 0.0)",
   },
+}));
+
+export const InputWrapper = styled(Grid)(({ theme }) => ({
+  display: "",
 }));

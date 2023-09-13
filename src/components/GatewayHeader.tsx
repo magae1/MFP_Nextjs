@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { usePathname } from "next/navigation";
 import { Avatar, Box, BoxProps, Typography } from "@mui/material";
 import { LockOutlined, HowToReg, Celebration } from "@mui/icons-material";

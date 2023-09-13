@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode, useMemo, useState } from "react";
+import { ReactNode, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -7,16 +7,13 @@ import {
   Button,
   FormControl,
   FormHelperText,
-  IconButton,
   Input,
-  InputAdornment,
   InputLabel,
   Link as MuiLink,
   Stack,
   useFormControl,
   useTheme,
 } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import validator from "validator";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -78,8 +75,6 @@ const SignUpLabel = (props: {
 
 export default function Page() {
   const router = useRouter();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showRepassword, setShowRepassword] = useState(false);
 
   const {
     register,
@@ -143,23 +138,7 @@ export default function Page() {
         <SignUpLabel htmlFor={"password-label"} isValid={!errors.password}>
           비밀번호*
         </SignUpLabel>
-        <Input
-          fullWidth
-          type={showPassword ? "text" : "password"}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="비밀번호 보기 버튼"
-                onClick={() => setShowPassword((v) => !v)}
-                onMouseDown={(e) => e.preventDefault()}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-          {...register("password")}
-        />
+        <Input fullWidth type={"password"} {...register("password")} />
         <FormHelperText error>
           {errors.password?.message && errors.password.message}
         </FormHelperText>
@@ -168,23 +147,7 @@ export default function Page() {
         <SignUpLabel htmlFor={"repassword-label"} isValid={!errors.re_password}>
           비밀번호(확인)*
         </SignUpLabel>
-        <Input
-          fullWidth
-          type={showRepassword ? "text" : "password"}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="확인 비밀번호 보기 버튼"
-                onClick={() => setShowRepassword((v) => !v)}
-                onMouseDown={(e) => e.preventDefault()}
-                edge="end"
-              >
-                {showRepassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-          {...register("re_password")}
-        />
+        <Input fullWidth type={"password"} {...register("re_password")} />
         <FormHelperText error>
           {errors.re_password?.message && errors.re_password.message}
         </FormHelperText>

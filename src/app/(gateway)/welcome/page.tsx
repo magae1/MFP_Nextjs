@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Grid, Typography, Button } from "@mui/material";

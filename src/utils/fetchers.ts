@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios, { InternalAxiosRequestConfig } from "axios";
+import jwt_decode from "jwt-decode";
 
-const InternalURL = "http://127.0.0.1:8000/";
-const ExternalURL = process.env.ExternalURL;
+import { doesTokenExpired, storeTokenPayload } from "@/utils/tokens";
 
 export const baseAxios = axios.create({
-  baseURL: InternalURL + "api/",
+  baseURL: "http://localhost:3000/api/",
   timeout: 2000,
   withCredentials: true,
 });

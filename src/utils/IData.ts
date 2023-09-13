@@ -56,3 +56,25 @@ export interface ITMDBSearchResultPage {
   total_pages: number;
   total_result: number;
 }
+
+export interface IAccessTokenPayLoad {
+  exp: string;
+  iat: string;
+  jti: string;
+  account_identifier: string;
+  nickname: string;
+  avatar: string;
+}
+
+export interface IProfile {
+  account: string;
+  avatar: string;
+  nickname: string;
+  introduction: string;
+}
+
+export interface IAccount {
+  identifier: string;
+  last_password_changed: Date;
+  profile: IProfile;
+}

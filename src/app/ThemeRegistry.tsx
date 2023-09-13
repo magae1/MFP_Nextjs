@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { Experimental_CssVarsProvider as CssVarsProvider } from "@mui/material/styles";
 import { CssBaseline, useTheme } from "@mui/material";
 import { ToastContainer } from "react-toastify";
@@ -17,6 +17,7 @@ const ThemeRegistry = (props: { children: ReactNode }) => {
       {children}
       <ToastContainer
         autoClose={3000}
+        pauseOnFocusLoss={false}
         theme={currentTheme.palette.mode === "light" ? "colored" : "dark"}
       />
     </CssVarsProvider>

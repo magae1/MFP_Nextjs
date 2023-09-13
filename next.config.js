@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "http://192.168.0.4:8000/api/:path*" + "/",
+      },
+    ];
+  },
   async redirects() {
     return [
       {
