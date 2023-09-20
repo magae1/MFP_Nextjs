@@ -28,21 +28,6 @@ export const theme = extendTheme({
         },
       },
     },
-    MuiInput: {
-      styleOverrides: {
-        root: {
-          fontSize: "1.1em",
-        },
-      },
-    },
-    MuiInputLabel: {
-      styleOverrides: {
-        root: {
-          top: "0.5em",
-          left: "-1em",
-        },
-      },
-    },
     MuiAppBar: {
       styleOverrides: {
         root: ({ theme }) => ({

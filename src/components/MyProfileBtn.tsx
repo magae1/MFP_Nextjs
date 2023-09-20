@@ -1,75 +1,47 @@
 "use client";
-import { useState, MouseEvent } from "react";
-import { useRouter } from "next/navigation";
-import { Avatar, ButtonBase, Menu, MenuItem } from "@mui/material";
+import Link from "next/link";
+import Image from "next/image";
+import { Avatar, Skeleton, ButtonBase } from "@mui/material";
 import useSWR from "swr";
 
-import { baseAxios } from "@/utils/fetchers";
-import jwt_decode from "jwt-decode";
-
-const refreshTokenFetcher = baseAxios
-  .get("auth/refresh/")
-  .then((res) => {
-    baseAxios.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${res.data.access}`;
-    jwt_decode(res.data.access);
-  })
-  .catch((err) => err);
+import { refreshTokenFetcher } from "@/utils/fetchers";
+import { IAccessTokenPayLoad } from "@/utils/IData";
 
 const MyProfileBtn = () => {
-  const { data } = useSWR(refreshTokenFetcher);
-  const router = useRouter();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(e.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const onClickAccount = () => {
-    handleClose();
-    router.push("/account");
-  };
-
-  const logOut = () => {
-    baseAxios.post("auth/logout/", null).then((res) => router.refresh());
-  };
+  const { data, error, isLoading } = useSWR<IAccessTokenPayLoad>(
+    `auth/refresh/`,
+    refreshTokenFetcher,
+    {
+      revalidateOnMount: true,
+      refreshInterval: 1000 * 60 * 20,
+      dedupingInterval: 1000 * 60 * 5,
+    },
+  );
 
   return (
-    <>
-      <ButtonBase
-        sx={{ borderRadius: "100%" }}
-        id="avatar-button"
-        aria-controls={open ? "avatar-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
-      >
-        <Avatar />
-      </ButtonBase>
-      <Menu
-        id="avatar-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-        sx={{
-          "& .MuiButtonBase-root": {
-            px: 3,
-            py: 1,
-            textAlign: "center",
-          },
-        }}
-      >
-        <MenuItem onClick={onClickAccount}>내 계정</MenuItem>
-        <MenuItem onClick={logOut}>로그아웃</MenuItem>
-      </Menu>
-    </>
+    <ButtonBase
+      sx={{ borderRadius: "100%" }}
+      id="avatar-button"
+      component={Link}
+      href={"/account"}
+    >
+      {!data || isLoading ? (
+        <Skeleton variant={"circular"}>
+          <Avatar />
+        </Skeleton>
+      ) : (
+        <Avatar>
+          {data.avatar && (
+            <Image
+              src={`http://127.0.0.1:8000${data.avatar}`}
+              alt={"아바타"}
+              fill
+              sizes={"100%"}
+            />
+          )}
+        </Avatar>
+      )}
+    </ButtonBase>
   );
 };
 

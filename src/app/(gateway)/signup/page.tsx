@@ -1,16 +1,14 @@
 "use client";
-import { ReactNode, useMemo, useState } from "react";
+import { ReactNode, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  Box,
+  Grid,
   Button,
-  FormControl,
-  FormHelperText,
-  Input,
   InputLabel,
   Link as MuiLink,
   Stack,
+  TextField,
   useFormControl,
   useTheme,
 } from "@mui/material";
@@ -48,30 +46,6 @@ const schema = z
   });
 
 type SchemaType = z.infer<typeof schema>;
-
-const SignUpLabel = (props: {
-  children: ReactNode;
-  htmlFor?: string;
-  isValid: boolean;
-}) => {
-  const { children, htmlFor, isValid } = props;
-  const theme = useTheme();
-  const { focused, filled } = useFormControl() || {};
-
-  const color = useMemo(() => {
-    if (!focused && filled) {
-      if (isValid) return theme.palette.success.main;
-      return theme.palette.error.main;
-    }
-    return undefined;
-  }, [focused, filled, isValid]);
-
-  return (
-    <InputLabel htmlFor={htmlFor} sx={{ color: color }}>
-      {children}
-    </InputLabel>
-  );
-};
 
 export default function Page() {
   const router = useRouter();
@@ -112,52 +86,50 @@ export default function Page() {
   return (
     <Stack
       component={"form"}
-      spacing={1}
+      spacing={2}
       onSubmit={onSignUp}
       autoComplete={"off"}
     >
-      <FormControl>
-        <SignUpLabel htmlFor="identifier-labal" isValid={!errors.identifier}>
-          아이디*
-        </SignUpLabel>
-        <Input maxRows={40} fullWidth {...register("identifier")} />
-        <FormHelperText error>
-          {errors.identifier?.message && errors.identifier.message}
-        </FormHelperText>
-      </FormControl>
-      <FormControl>
-        <SignUpLabel htmlFor={"email-label"} isValid={!errors.email}>
-          이메일
-        </SignUpLabel>
-        <Input fullWidth inputMode={"email"} {...register("email")} />
-        <FormHelperText error>
-          {errors.email?.message && errors.email.message}
-        </FormHelperText>
-      </FormControl>
-      <FormControl>
-        <SignUpLabel htmlFor={"password-label"} isValid={!errors.password}>
-          비밀번호*
-        </SignUpLabel>
-        <Input fullWidth type={"password"} {...register("password")} />
-        <FormHelperText error>
-          {errors.password?.message && errors.password.message}
-        </FormHelperText>
-      </FormControl>
-      <FormControl>
-        <SignUpLabel htmlFor={"repassword-label"} isValid={!errors.re_password}>
-          비밀번호(확인)*
-        </SignUpLabel>
-        <Input fullWidth type={"password"} {...register("re_password")} />
-        <FormHelperText error>
-          {errors.re_password?.message && errors.re_password.message}
-        </FormHelperText>
-      </FormControl>
-      <Button type={"submit"}>회원가입</Button>
-      <Box sx={{ display: "flex", pt: 1, flexWrap: "wrap" }}>
-        <MuiLink component={Link} href={"/login"} variant={"body2"}>
-          로그인하러 가기
-        </MuiLink>
-      </Box>
+      <TextField
+        fullWidth
+        label={"아이디*"}
+        helperText={errors.identifier?.message && errors.identifier.message}
+        error={!!errors.identifier}
+        {...register("identifier")}
+      />
+      <TextField
+        fullWidth
+        label={"이메일"}
+        helperText={errors.email?.message && errors.email.message}
+        error={!!errors.email}
+        {...register("email")}
+      />
+      <TextField
+        fullWidth
+        label={"비밀번호*"}
+        helperText={errors.password?.message && errors.password.message}
+        error={!!errors.password}
+        {...register("password")}
+      />
+      <TextField
+        fullWidth
+        label={"비밀번호(확인)*"}
+        helperText={errors.re_password?.message && errors.re_password.message}
+        error={!!errors.re_password}
+        {...register("re_password")}
+      />
+      <Grid container>
+        <Grid item xs={12}>
+          <Button fullWidth type={"submit"}>
+            회원가입
+          </Button>
+        </Grid>
+        <Grid item xs={"auto"}>
+          <MuiLink component={Link} href={"/login"} variant={"body2"}>
+            로그인하러 가기
+          </MuiLink>
+        </Grid>
+      </Grid>
     </Stack>
   );
 }

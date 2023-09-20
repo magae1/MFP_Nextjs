@@ -68,12 +68,13 @@ export interface IAccessTokenPayLoad {
 
 export interface IProfile {
   account: string;
-  avatar: string;
+  avatar: string | null;
   nickname: string;
   introduction: string;
 }
 
 export interface IAccount {
+  id: string;
   identifier: string;
   last_password_changed: Date;
   profile: IProfile;

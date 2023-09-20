@@ -9,6 +9,7 @@ import {
   FormControl,
   FormHelperText,
   InputLabel,
+  TextField,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -21,10 +22,9 @@ import { IAccessTokenPayLoad } from "@/utils/IData";
 import { storeTokenPayload } from "@/utils/tokens";
 
 const schema = z.object({
-  identifier: z.string(),
-  password: z.string(),
+  identifier: z.string().min(1, "아이디를 입력해주세요."),
+  password: z.string().min(1, "비밀번호를 입력해주세요."),
 });
-
 type SchemaType = z.infer<typeof schema>;
 
 export default function Page() {
@@ -51,33 +51,28 @@ export default function Page() {
   });
 
   return (
-    <Stack component={"form"} spacing={1} onSubmit={onLogIn}>
-      <FormControl>
-        <InputLabel htmlFor="identifier-labal">아이디</InputLabel>
-        <Input maxRows={40} fullWidth {...register("identifier")} />
-        <FormHelperText error>
-          {errors.identifier?.message && errors.identifier.message}
-        </FormHelperText>
-      </FormControl>
-      <FormControl>
-        <InputLabel htmlFor="password-labal">비밀번호</InputLabel>
-        <Input
-          type={"password"}
-          maxRows={40}
-          fullWidth
-          {...register("password")}
-        />
-        <FormHelperText error>
-          {errors.password?.message && errors.password.message}
-        </FormHelperText>
-      </FormControl>
-      <Grid container spacing={0.5}>
+    <Stack component={"form"} spacing={2} onSubmit={onLogIn}>
+      <TextField
+        fullWidth
+        label={"아이디"}
+        error={!!errors.password}
+        {...register("identifier")}
+      />
+      <TextField
+        fullWidth
+        label={"비밀번호"}
+        type={"password"}
+        helperText={errors.password?.message && errors.password.message}
+        error={!!errors.password}
+        {...register("password")}
+      />
+      <Grid container>
         <Grid item xs={12}>
           <Button type="submit" fullWidth>
             로그인
           </Button>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={"auto"}>
           <MuiLink component={Link} href="/signup" variant="body2">
             회원가입하러 가기
           </MuiLink>

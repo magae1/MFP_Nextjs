@@ -8,7 +8,6 @@ export default function Main() {
       {_.range(10).map((value, index) => (
         <li key={`k-${index}`}>{value}</li>
       ))}
-      <Link href={"/signup"}>회원가입</Link>
     </Box>
   );
 }

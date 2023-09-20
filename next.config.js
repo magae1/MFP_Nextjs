@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "http://192.168.0.4:8000/api/:path*" + "/",
+        destination: "http://127.0.0.1:8000/api/:path*" + "/",
       },
     ];
   },
@@ -34,6 +34,18 @@ const nextConfig = {
         permanent: false,
         destination: "/",
       },
+      {
+        source: "/account",
+        missing: [
+          {
+            type: "cookie",
+            key: "isLogIn",
+            value: "True",
+          },
+        ],
+        permanent: false,
+        destination: "/",
+      },
     ];
   },
   images: {
@@ -43,6 +55,11 @@ const nextConfig = {
         hostname: "image.tmdb.org",
         port: "",
         pathname: "/t/p/**",
+      },
+      {
+        protocol: "http",
+        hostname: "127.0.0.1",
+        port: "8000",
       },
     ],
   },

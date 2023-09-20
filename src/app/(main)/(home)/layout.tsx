@@ -11,7 +11,7 @@ const MainLayout = ({ children, boxoffice }: props) => {
     <Grid container spacing={1} mt={2}>
       <Grid container item spacing={2} xs={12} sm={6}>
         <Grid item xs={12}>
-          {boxoffice}
+          {/*{boxoffice}*/}
         </Grid>
         <Grid item xs={12}></Grid>
       </Grid>

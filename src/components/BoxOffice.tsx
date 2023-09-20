@@ -2,7 +2,6 @@ import Image from "next/image";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 
 import { IDailyBoxOffice } from "@/utils/IData";
-import { tmdbFetcher } from "@/utils/fetchers";
 
 interface props {
   data: IDailyBoxOffice;
@@ -10,10 +9,18 @@ interface props {
 
 const TMDB_IMAGE_URL = "https://image.tmdb.org/t/p/w342";
 
+async function getData(movie: string) {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/search/movie?query=${movie}&language=ko&region=KR&api_key=${process.env.TMDB_API_KEY}`,
+  );
+  if (!res.ok) throw new Error("21");
+  return res.json();
+}
+
 const BoxOffice = async ({ data }: props) => {
   const { rnum, rank, movieNm } = data;
 
-  const searchResult = await tmdbFetcher(movieNm);
+  const searchResult = await getData(movieNm);
 
   return (
     <Card sx={{ width: "inherit" }}>
