@@ -9,8 +9,8 @@ import { IAccount } from "@/utils/IData";
 import ClientLoading from "@/components/ClientLoading";
 
 export default function Page() {
-  const { data, error, isLoading, isValidating } = useSWR<IAccount>(
-    "account/",
+  const { data, error, isLoading, isValidating, mutate } = useSWR<IAccount>(
+    "account/me/",
     baseGetFetcher,
     {
       revalidateOnFocus: false,

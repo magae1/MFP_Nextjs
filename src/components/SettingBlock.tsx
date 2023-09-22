@@ -9,7 +9,7 @@ interface props {
 
 const SettingBlock = ({ subtitle, description, children }: props) => {
   return (
-    <Grid container>
+    <Grid container spacing={{ xs: 2, sm: 0 }}>
       <Grid item xs={12} sm={3}>
         <Typography variant={"h6"}>{subtitle}</Typography>
         {!!description && <Typography>{description}</Typography>}

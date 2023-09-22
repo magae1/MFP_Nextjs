@@ -4,8 +4,9 @@ import Image from "next/image";
 import { Avatar, Skeleton, ButtonBase } from "@mui/material";
 import useSWR from "swr";
 
-import { refreshTokenFetcher } from "@/utils/fetchers";
+import { refreshTokenFetcher, baseAxios } from "@/utils/fetchers";
 import { IAccessTokenPayLoad } from "@/utils/IData";
+import { toast } from "react-toastify";
 
 const MyProfileBtn = () => {
   const { data, error, isLoading } = useSWR<IAccessTokenPayLoad>(
@@ -18,28 +19,27 @@ const MyProfileBtn = () => {
     },
   );
 
+  if (!!error) {
+    baseAxios
+      .post("auth/logout")
+      .then((res) => toast.info("인증 정보가 만료됐습니다."))
+      .catch();
+  }
+
   return (
     <ButtonBase
       sx={{ borderRadius: "100%" }}
       id="avatar-button"
       component={Link}
       href={"/account"}
+      disabled={isLoading}
     >
       {!data || isLoading ? (
         <Skeleton variant={"circular"}>
           <Avatar />
         </Skeleton>
       ) : (
-        <Avatar>
-          {data.avatar && (
-            <Image
-              src={`http://127.0.0.1:8000${data.avatar}`}
-              alt={"아바타"}
-              fill
-              sizes={"100%"}
-            />
-          )}
-        </Avatar>
+        <Avatar src={`/media/avatars/${data.account_identifier}.JPEG`} />
       )}
     </ButtonBase>
   );

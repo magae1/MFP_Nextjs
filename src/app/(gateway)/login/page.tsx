@@ -25,7 +25,7 @@ const schema = z.object({
   identifier: z.string().min(1, "아이디를 입력해주세요."),
   password: z.string().min(1, "비밀번호를 입력해주세요."),
 });
-type SchemaType = z.infer<typeof schema>;
+export type LoginSchemaType = z.infer<typeof schema>;
 
 export default function Page() {
   const {
@@ -33,11 +33,11 @@ export default function Page() {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm<SchemaType>({ resolver: zodResolver(schema) });
+  } = useForm<LoginSchemaType>({ resolver: zodResolver(schema) });
 
   const onLogIn = handleSubmit((data) => {
     baseAxios
-      .post("auth/login/", data)
+      .post("auth/login", data)
       .then((res) => location.replace("/"))
       .catch((error) => {
         if (!!error.response && !!error.response.data) {

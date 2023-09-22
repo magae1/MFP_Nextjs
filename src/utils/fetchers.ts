@@ -1,10 +1,10 @@
-import axios, { InternalAxiosRequestConfig } from "axios";
+import axios from "axios";
 import jwt_decode from "jwt-decode";
 
 import { IAccessTokenPayLoad } from "@/utils/IData";
 
 export const baseAxios = axios.create({
-  baseURL: "http://localhost:3000/api/",
+  baseURL: "http://127.0.0.1:8000/api/",
   timeout: 2000,
   withCredentials: true,
 });

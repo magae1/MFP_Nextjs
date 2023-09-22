@@ -25,15 +25,6 @@ export interface IBoxOffice {
   dailyBoxOfficeList: IDailyBoxOffice[];
 }
 
-export interface IObtainTokens {
-  refresh: string;
-  access: string;
-}
-
-export interface IRefreshTokens {
-  refresh: string;
-}
-
 export interface ITMDBSearchResult {
   adult: boolean;
   backdrop_path: string;
@@ -62,8 +53,6 @@ export interface IAccessTokenPayLoad {
   iat: string;
   jti: string;
   account_identifier: string;
-  nickname: string;
-  avatar: string;
 }
 
 export interface IProfile {
