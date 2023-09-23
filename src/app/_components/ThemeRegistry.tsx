@@ -5,7 +5,7 @@ import { CssBaseline, useTheme } from "@mui/material";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
-import { theme } from "./theme";
+import { theme } from "@/app/_libs/theme";
 
 const ThemeRegistry = (props: { children: ReactNode }) => {
   const currentTheme = useTheme();

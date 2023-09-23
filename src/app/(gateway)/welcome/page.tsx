@@ -6,7 +6,7 @@ import { Grid, Typography, Button } from "@mui/material";
 export default function Page() {
   const searchParams = useSearchParams();
 
-  const identifier = searchParams.get("identifier");
+  const identifier = searchParams.get("id");
   const email = searchParams.get("email");
 
   return (

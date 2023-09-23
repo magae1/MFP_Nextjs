@@ -1,17 +1,7 @@
 "use client";
-import { ReactNode, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  Grid,
-  Button,
-  InputLabel,
-  Link as MuiLink,
-  Stack,
-  TextField,
-  useFormControl,
-  useTheme,
-} from "@mui/material";
+import { Grid, Button, Link as MuiLink, Stack, TextField } from "@mui/material";
 import validator from "validator";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,6 +10,8 @@ import { toast } from "react-toastify";
 import _ from "underscore";
 
 import { baseAxios } from "@/utils/fetchers";
+import axios from "axios";
+import { a } from "@react-spring/web";
 
 const schema = z
   .object({
@@ -58,11 +50,11 @@ export default function Page() {
   } = useForm<SchemaType>({ resolver: zodResolver(schema) });
 
   const onSignUp = handleSubmit((data, event) => {
-    baseAxios
-      .post("signup/", data)
+    axios
+      .post("/api/auth/signup/", data)
       .then((res) =>
         router.push(
-          `/welcome/?identifier=${res.data.identifier}&email=${res.data.email}`,
+          `/welcome/?id=${res.data.identifier}&email=${res.data.email}`,
         ),
       )
       .catch((error) => {
@@ -109,6 +101,7 @@ export default function Page() {
         label={"비밀번호*"}
         helperText={errors.password?.message && errors.password.message}
         error={!!errors.password}
+        type={"password"}
         {...register("password")}
       />
       <TextField
@@ -116,6 +109,7 @@ export default function Page() {
         label={"비밀번호(확인)*"}
         helperText={errors.re_password?.message && errors.re_password.message}
         error={!!errors.re_password}
+        type={"password"}
         {...register("re_password")}
       />
       <Grid container>

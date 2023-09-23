@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 
 import { IProfile } from "@/utils/IData";
 import { baseAxios } from "@/utils/fetchers";
+import axios from "axios";
 
 const schema = z.object({
   nickname: z.string({
@@ -43,12 +44,12 @@ export default function ProfileForm(props: { profile: IProfile }) {
   });
 
   const onSubmit = handleSubmit((data) => {
-    baseAxios
-      .post(`account/profile/`, data, {
+    axios
+      .post(`/api/account/profile/`, data, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => toast.info("123"))
-      .catch();
+      .catch((error) => console.error(error));
   });
 
   return (

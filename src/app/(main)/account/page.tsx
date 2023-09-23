@@ -1,27 +1,25 @@
-"use client";
 import { Box, Divider, Stack, Typography } from "@mui/material";
-import useSWR from "swr";
+import { cookies, headers } from "next/headers";
 
-import { baseGetFetcher } from "@/utils/fetchers";
 import SettingBlock from "@/components/SettingBlock";
 import ProfileForm from "@/components/ProfileForm";
 import { IAccount } from "@/utils/IData";
-import ClientLoading from "@/components/ClientLoading";
 
-export default function Page() {
-  const { data, error, isLoading, isValidating, mutate } = useSWR<IAccount>(
-    "account/me/",
-    baseGetFetcher,
-    {
-      revalidateOnFocus: false,
-    },
-  );
+async function getData() {
+  const headersList = headers();
+  const header = new Headers(headersList);
+  console.log(header);
+  const res = await fetch(`${process.env.BACKEND_URL}/api/account/me/`, {
+    headers: header,
+  });
 
-  if (error) return <Box>fail</Box>;
-  if (!data || isLoading || isValidating)
-    return (
-      <ClientLoading sx={{ width: "100%", height: "calc(100vh - 45px)" }} />
-    );
+  if (!res.ok) throw new Error("인증 정보를 확인할 수 없습니다.");
+  return res.json();
+}
+
+export default async function Page() {
+  const data: IAccount = await getData();
+
   return (
     <>
       <Box py={4}>

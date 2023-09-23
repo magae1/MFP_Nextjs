@@ -1,17 +1,15 @@
 import { ReactNode } from "react";
-import { Paper, Container, Stack } from "@mui/material";
+import { Container } from "@mui/material";
 
-import Copyright from "@/components/Copyright";
-import GatewayHeader from "@/components/GatewayHeader";
+import Home from "@/app/(gateway)/_component/Home";
+import Copyright from "@/app/(gateway)/_component/Copyright";
 
-export default function GatewayLayout({ children }: { children: ReactNode }) {
+export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <Container sx={{ display: "flex", justifyContent: "center" }}>
-      <Stack mt={6} width={"100%"} maxWidth={440} spacing={2}>
-        <GatewayHeader />
-        {children}
-        <Copyright sx={{ pt: 8, pb: 2 }} />
-      </Stack>
+    <Container maxWidth={"sm"} sx={{ flex: 1, pt: { xs: 4, sm: 12, md: 16 } }}>
+      <Home />
+      {children}
+      <Copyright sx={{ pt: 8, pb: 2 }} />
     </Container>
   );
 }

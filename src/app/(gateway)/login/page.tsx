@@ -1,25 +1,12 @@
 "use client";
 import Link from "next/link";
-import {
-  Input,
-  Button,
-  Link as MuiLink,
-  Grid,
-  Stack,
-  FormControl,
-  FormHelperText,
-  InputLabel,
-  TextField,
-} from "@mui/material";
+import { redirect, useRouter } from "next/navigation";
+import { Button, Link as MuiLink, Grid, Stack, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
-import jwt_decode from "jwt-decode";
-
-import { baseAxios } from "@/utils/fetchers";
-import { IAccessTokenPayLoad } from "@/utils/IData";
-import { storeTokenPayload } from "@/utils/tokens";
+import axios from "axios";
 
 const schema = z.object({
   identifier: z.string().min(1, "아이디를 입력해주세요."),
@@ -28,6 +15,7 @@ const schema = z.object({
 export type LoginSchemaType = z.infer<typeof schema>;
 
 export default function Page() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -36,7 +24,7 @@ export default function Page() {
   } = useForm<LoginSchemaType>({ resolver: zodResolver(schema) });
 
   const onLogIn = handleSubmit((data) => {
-    baseAxios
+    axios
       .post("auth/login", data)
       .then((res) => location.replace("/"))
       .catch((error) => {
