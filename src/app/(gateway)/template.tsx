@@ -1,11 +1,12 @@
 "use client";
 import { ReactNode, useMemo } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box, Container, Typography, useTheme } from "@mui/material";
 import { Celebration, HowToReg, LockOutlined } from "@mui/icons-material";
 
 export default function Template({ children }: { children: ReactNode }) {
   const segment = useSelectedLayoutSegment();
+  const theme = useTheme();
 
   const icon = useMemo(() => {
     if (segment === "login") return <LockOutlined />;
@@ -20,7 +21,7 @@ export default function Template({ children }: { children: ReactNode }) {
   }, [segment]);
 
   return (
-    <Box>
+    <Container maxWidth={"xs"} disableGutters>
       <Box sx={{ display: "flex", alignItems: "center", my: 3 }}>
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>{icon}</Avatar>
         <Typography component="h1" variant="h4">
@@ -28,6 +29,6 @@ export default function Template({ children }: { children: ReactNode }) {
         </Typography>
       </Box>
       {children}
-    </Box>
+    </Container>
   );
 }
