@@ -1,16 +1,22 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 
-import SettingBlock from "@/components/SettingBlock";
-import ProfileForm from "@/components/ProfileForm";
-import { IAccount } from "@/utils/IData";
+import SettingBlock from "@/app/(main)/account/_components/SettingBlock";
+import ProfileForm from "@/app/(main)/account/_components/ProfileForm";
+import { TAccount } from "@/app/_libs/types";
+import { authHeader } from "@/app/_libs/headers";
+
+export const dynamic = "force-dynamic";
 
 async function getData() {
-  const headersList = headers();
-  const header = new Headers(headersList);
-  console.log(header);
+  const cookieStore = cookies();
+  const accessToken = cookieStore.get("access");
+
+  if (!accessToken) return null;
+  const header = authHeader(accessToken.value);
   const res = await fetch(`${process.env.BACKEND_URL}/api/account/me/`, {
     headers: header,
+    cache: "no-cache",
   });
 
   if (!res.ok) throw new Error("인증 정보를 확인할 수 없습니다.");
@@ -18,13 +24,12 @@ async function getData() {
 }
 
 export default async function Page() {
-  const data: IAccount = await getData();
+  const data: TAccount = await getData();
 
   return (
     <>
-      <Box py={4}>
+      <Box py={5}>
         <Typography variant={"h4"}>내 계정</Typography>
-        <Typography variant={"h6"}>안녕하세요! {data.identifier}님</Typography>
       </Box>
       <Stack divider={<Divider />} spacing={{ xs: 2, sm: 2 }}>
         <SettingBlock subtitle={"프로필"}>

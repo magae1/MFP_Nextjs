@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
 import { Button, Link as MuiLink, Grid, Stack, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,7 +14,6 @@ const schema = z.object({
 export type LoginSchemaType = z.infer<typeof schema>;
 
 export default function Page() {
-  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -26,8 +24,9 @@ export default function Page() {
   const onLogIn = handleSubmit((data) => {
     axios
       .post("auth/login", data)
-      .then((res) => location.replace("/"))
+      .then((res) => (location.href = "/"))
       .catch((error) => {
+        console.error(error);
         if (!!error.response && !!error.response.data) {
           setError("password", {
             message: "계정을 찾을 수 없습니다. 아이디/비밀번호를 확인해주세요.",

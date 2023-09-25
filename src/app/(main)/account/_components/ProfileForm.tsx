@@ -16,9 +16,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "react-toastify";
 
-import { IProfile } from "@/utils/IData";
-import { baseAxios } from "@/utils/fetchers";
-import axios from "axios";
+import { TProfile } from "@/app/_libs/types";
+import { baseAxios } from "@/app/_libs/fetchers";
 
 const schema = z.object({
   nickname: z.string({
@@ -29,7 +28,7 @@ const schema = z.object({
 
 type SchemaType = z.infer<typeof schema>;
 
-export default function ProfileForm(props: { profile: IProfile }) {
+export default function ProfileForm(props: { profile: TProfile }) {
   const { profile } = props;
   const {
     register,
@@ -44,7 +43,7 @@ export default function ProfileForm(props: { profile: IProfile }) {
   });
 
   const onSubmit = handleSubmit((data) => {
-    axios
+    baseAxios
       .post(`/api/account/profile/`, data, {
         headers: { "Content-Type": "multipart/form-data" },
       })
@@ -65,32 +64,7 @@ export default function ProfileForm(props: { profile: IProfile }) {
         "& .MuiInputBase-root": { px: 0, py: 1 },
       }}
     >
-      <Grid item xs={4} lg={3}>
-        <Box
-          sx={{
-            position: "relative",
-            width: "100%",
-            maxWidth: "200px",
-            aspectRatio: 1,
-          }}
-        >
-          <Button
-            sx={{
-              position: "absolute",
-              bottom: { xs: -7, sm: -3 },
-              right: 0,
-              zIndex: 500,
-              borderRadius: "6px",
-            }}
-          >
-            <AddPhotoAlternate />
-          </Button>
-          <Avatar
-            src={`/media/avatars/${profile.account}.JPEG`}
-            sx={{ width: "100%", height: "100%" }}
-          />
-        </Box>
-      </Grid>
+      <Grid item xs={4} lg={3}></Grid>
       <Grid
         item
         xs={8}

@@ -5,24 +5,32 @@ import { Button, Container } from "@mui/material";
 
 import MyProfileBtn from "@/app/(main)/_components/MyProfileBtn";
 import NavIsland from "@/app/(main)/_components/NavIsland";
-import { tokenRefresh } from "@/app/_libs/fetchers";
+import { authHeader } from "@/app/_libs/headers";
 
-async function getState() {
+async function getUserData() {
   const cookieStore = cookies();
-  const refreshToken = cookieStore.get("refresh");
+  const accessToken = cookieStore.get("access");
 
-  if (!refreshToken) return false;
-  const res = await tokenRefresh(refreshToken.value);
-  return res.ok;
+  if (!accessToken) return null;
+
+  const header = authHeader(accessToken.value);
+  const res = await fetch(`${process.env.BACKEND_URL}/api/account/profile/`, {
+    headers: header,
+    cache: "force-cache",
+  });
+
+  if (!res.ok) return null;
+  return res.json();
 }
 
 export default async function Template({ children }: { children: ReactNode }) {
-  const isLogin = await getState();
+  const userData = await getUserData();
+
   return (
     <>
       <NavIsland>
-        {isLogin ? (
-          <MyProfileBtn />
+        {!!userData ? (
+          <MyProfileBtn data={userData} />
         ) : (
           <Button component={Link} href={"/login"}>
             로그인
